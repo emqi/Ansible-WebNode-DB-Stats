@@ -5,8 +5,8 @@
     wp_directory: /var/www/blogasek
     database_name: blogasek
     telegraf_url: https://dl.influxdata.com/telegraf/releases/telegraf-1.8.3-1.x86_64.rpm
-    metrics_storage_ip: 172.31.24.252
-    serverdb_ip: 172.31.22.212
+    metrics_storage_ip: 18.196.141.234
+    serverdb_ip: 18.185.112.74
   tasks:
     - name: "Install apache server"
       yum:
@@ -29,6 +29,10 @@
       template:
         src: templates/vhost.conf
         dest: /etc/httpd/conf.d/blog.conf
+    - name: "Add mod_status to apache config"
+      template:
+        src: templates/httpd.conf
+        dest: /etc/httpd/conf/httpd.conf
     - name: "Restart server httpd sever"
       service:
         name: httpd
@@ -51,7 +55,7 @@
     username: user_blogasek
     password: eloeloelo321560
     telegraf_url: https://dl.influxdata.com/telegraf/releases/telegraf-1.8.3-1.x86_64.rpm
-    metrics_storage_ip: 172.31.24.252
+    metrics_storage_ip: 18.196.141.234
   tasks:    
     - include_tasks: tasks/telegraf.yml
     - name: "Install mysql server"
