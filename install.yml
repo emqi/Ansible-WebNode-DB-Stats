@@ -91,6 +91,7 @@
   vars:
     influxdb_url: https://dl.influxdata.com/influxdb/releases/influxdb-1.7.1.x86_64.rpm
     grafana_url: https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.3.4-1.x86_64.rpm
+    metrics_storage_ip: 18.196.141.234
   tasks:
     - name: "Install InfluxDB"
       yum:
@@ -106,3 +107,11 @@
     - service:
         name: grafana-server
         state: restarted
+    - name: "Create influxdb database"
+      influxdb_database:
+        hostname: "{{metrics_storage_ip}}"
+        username: "blogasek"
+        password: "blogasek"
+        database_name: "statystyki"
+        ssl: yes
+        validate_certs: yes
